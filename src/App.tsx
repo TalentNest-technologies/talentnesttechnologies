@@ -8,6 +8,10 @@ import { Footer } from "@/components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/Products";
+import ProductTalentNest from "./pages/ProductTalentNest";
+import ProductTenantNest from "./pages/ProductTenantNest";
+import ProductHotelAI from "./pages/ProductHotelAI";
+import RecruitingContracting from "./pages/RecruitingContracting";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/talentnest" element={<ProductTalentNest />} />
+          <Route path="/products/tenantnest" element={<ProductTenantNest />} />
+          <Route path="/products/hotel-ai" element={<ProductHotelAI />} />
+          <Route path="/recruiting-contracting" element={<RecruitingContracting />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

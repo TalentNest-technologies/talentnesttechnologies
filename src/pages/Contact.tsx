@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { FloatingBackground } from "@/components/FloatingBackground";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -26,24 +27,46 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      purpose: "",
-      message: "",
-    });
+    
+    try {
+      // TODO: Replace 'YOUR_FORMSPREE_ID' with your actual Formspree form ID
+      // Get your free Formspree ID at https://formspree.io
+      const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "We'll get back to you within 24 hours.",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          purpose: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Submission failed");
+      }
+    } catch (error) {
+      toast({
+        title: "Submission Failed",
+        description: "Please try again later or contact us directly.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen pt-24">
+    <div className="min-h-screen pt-24 relative">
+      <FloatingBackground variant="contact" />
       {/* Hero Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
+import { Subscribe } from "./Subscribe";
 
 export const Footer = () => {
   return (
     <footer className="bg-foreground text-background py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
@@ -101,6 +102,11 @@ export const Footer = () => {
                 <span>118 Jewett Avenue, Jersey City, NJ, 07304</span>
               </li>
             </ul>
+          </div>
+
+          {/* Subscribe */}
+          <div>
+            <Subscribe />
           </div>
         </div>
 

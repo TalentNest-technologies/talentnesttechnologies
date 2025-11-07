@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Target, Eye, Heart, Shield, Users, Zap } from "lucide-react";
+import { FloatingBackground } from "@/components/FloatingBackground";
 
 const About = () => {
   const values = [
@@ -23,7 +24,8 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24">
+    <div className="min-h-screen pt-24 relative">
+      <FloatingBackground variant="about" />
       {/* Hero Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">

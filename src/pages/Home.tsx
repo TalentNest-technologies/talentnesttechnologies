@@ -14,6 +14,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { FloatingBackground } from "@/components/FloatingBackground";
 
 const Home = () => {
   const products = [
@@ -66,7 +67,8 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <FloatingBackground variant="home" />
       {/* Hero Section */}
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden"

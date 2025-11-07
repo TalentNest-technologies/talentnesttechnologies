@@ -6,6 +6,7 @@ import {
   Hotel, CheckCircle2, DollarSign, BarChart3, 
   Calendar, Users, Shield, Zap, TrendingUp, Clock
 } from "lucide-react";
+import { FloatingBackground } from "@/components/FloatingBackground";
 
 const ProductHotelAI = () => {
   const clients = ["Ramada", "Motel 6", "Choice Hotels", "Wyndham", "Quality Inn"];
@@ -73,7 +74,8 @@ const ProductHotelAI = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24">
+    <div className="min-h-screen pt-24 relative">
+      <FloatingBackground variant="hotel" />
       {/* Hero */}
       <section className="py-24 bg-gradient-to-br from-emerald-500/10 via-cyan-500/5 to-blue-500/10">
         <div className="container mx-auto px-4">

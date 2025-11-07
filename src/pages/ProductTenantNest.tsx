@@ -6,6 +6,7 @@ import {
   Building2, CheckCircle2, CreditCard, Wrench, 
   BarChart3, FileCheck, Bell, TrendingUp, Users
 } from "lucide-react";
+import { FloatingBackground } from "@/components/FloatingBackground";
 
 const ProductTenantNest = () => {
   const modules = [
@@ -60,7 +61,8 @@ const ProductTenantNest = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24">
+    <div className="min-h-screen pt-24 relative">
+      <FloatingBackground variant="tenantnest" />
       {/* Hero */}
       <section className="py-24 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-cyan-500/10">
         <div className="container mx-auto px-4">

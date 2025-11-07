@@ -6,6 +6,7 @@ import {
   Users, CheckCircle2, Shield, Target, Award, 
   TrendingUp, Briefcase, Search, FileCheck, UserCheck
 } from "lucide-react";
+import { FloatingBackground } from "@/components/FloatingBackground";
 
 const RecruitingContracting = () => {
   const engagementModels = [
@@ -102,7 +103,8 @@ const RecruitingContracting = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24">
+    <div className="min-h-screen pt-24 relative">
+      <FloatingBackground variant="contracting" />
       {/* Hero */}
       <section className="py-24 bg-gradient-to-br from-blue-600/10 via-indigo-500/5 to-purple-500/10">
         <div className="container mx-auto px-4">

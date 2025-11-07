@@ -12,6 +12,7 @@ import {
   Zap,
   TrendingUp,
 } from "lucide-react";
+import { FloatingBackground } from "@/components/FloatingBackground";
 
 const Services = () => {
   const services = [
@@ -96,7 +97,8 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24">
+    <div className="min-h-screen pt-24 relative">
+      <FloatingBackground variant="services" />
       {/* Hero Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">

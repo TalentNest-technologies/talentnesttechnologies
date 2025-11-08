@@ -13,7 +13,8 @@ export const Subscribe = () => {
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace 'YOUR_FORMSPREE_ID' with your actual Formspree form ID
+      // IMPORTANT: Get your Formspree ID from https://formspree.io
+      // Replace 'YOUR_FORMSPREE_ID' below with your actual form ID (e.g., 'mxyz1234')
       const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

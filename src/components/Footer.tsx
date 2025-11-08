@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
 import { Subscribe } from "./Subscribe";
+import logo from "@/assets/talentnest-logo.png";
 
 export const Footer = () => {
   return (
@@ -9,12 +10,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
-                <span className="text-white font-bold text-xl">TN</span>
-              </div>
-              <span className="font-heading font-bold text-xl">TalentNest</span>
-            </div>
+            <img src={logo} alt="TalentNest Technologies" className="h-12 w-auto mb-4" />
             <p className="text-background/80 text-sm">
               AI-driven solutions for hiring, housing, and hospitality.
             </p>

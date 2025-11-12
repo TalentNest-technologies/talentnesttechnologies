@@ -24,6 +24,8 @@ import Revenue from "./pages/hotel-ai/dashboard/Revenue";
 import Reviews from "./pages/hotel-ai/dashboard/Reviews";
 import Housekeeping from "./pages/hotel-ai/dashboard/Housekeeping";
 import Forecasting from "./pages/hotel-ai/dashboard/Forecasting";
+import Staff from "./pages/hotel-ai/dashboard/Staff";
+import Settings from "./pages/hotel-ai/dashboard/Settings";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +59,8 @@ const App = () => (
             <Route path="reviews" element={<Reviews />} />
             <Route path="housekeeping" element={<Housekeeping />} />
             <Route path="forecasting" element={<Forecasting />} />
+            <Route path="staff" element={<Staff />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
           
           {/* 404 Route */}

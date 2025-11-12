@@ -26,6 +26,7 @@ import Housekeeping from "./pages/hotel-ai/dashboard/Housekeeping";
 import Forecasting from "./pages/hotel-ai/dashboard/Forecasting";
 import Staff from "./pages/hotel-ai/dashboard/Staff";
 import Settings from "./pages/hotel-ai/dashboard/Settings";
+import CompetitorRates from "./pages/hotel-ai/dashboard/CompetitorRates";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,7 @@ const App = () => (
             <Route path="reviews" element={<Reviews />} />
             <Route path="housekeeping" element={<Housekeeping />} />
             <Route path="forecasting" element={<Forecasting />} />
+            <Route path="competitor-rates" element={<CompetitorRates />} />
             <Route path="staff" element={<Staff />} />
             <Route path="settings" element={<Settings />} />
           </Route>

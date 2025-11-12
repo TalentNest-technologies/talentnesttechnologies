@@ -21,6 +21,7 @@ import {
   Users,
   Settings,
   PlusCircle,
+  BarChart3,
 } from "lucide-react";
 
 const menuItems = [
@@ -29,6 +30,7 @@ const menuItems = [
   { title: "Reviews", url: "/hotel-ai/dashboard/reviews", icon: Star },
   { title: "Housekeeping", url: "/hotel-ai/dashboard/housekeeping", icon: Bed },
   { title: "Forecasting", url: "/hotel-ai/dashboard/forecasting", icon: TrendingUp },
+  { title: "Competitor Rates", url: "/hotel-ai/dashboard/competitor-rates", icon: BarChart3 },
   { title: "Staff", url: "/hotel-ai/dashboard/staff", icon: Users },
   { title: "Settings", url: "/hotel-ai/dashboard/settings", icon: Settings },
 ];

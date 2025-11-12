@@ -1,1 +1,4 @@
 project_id = "fvbvpzjwhqjeezyfwyzy"
+
+[functions.scrape-competitor-rates]
+verify_jwt = true

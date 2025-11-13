@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,7 @@ export function MFAVerification({ factorId, onSuccess, onCancel }: MFAVerificati
   const [isVerifying, setIsVerifying] = useState(false);
   const [challengeId, setChallengeId] = useState<string>("");
 
-  useState(() => {
+  useEffect(() => {
     // Create MFA challenge on mount
     const createChallenge = async () => {
       try {
@@ -37,7 +37,7 @@ export function MFAVerification({ factorId, onSuccess, onCancel }: MFAVerificati
       }
     };
     createChallenge();
-  });
+  }, [factorId, toast]);
 
   const verifyCode = async (e: React.FormEvent) => {
     e.preventDefault();

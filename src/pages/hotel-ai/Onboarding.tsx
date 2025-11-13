@@ -99,19 +99,22 @@ export default function Onboarding() {
 
       if (error) throw error;
 
-      // Update user role to owner using upsert to ensure it exists
+      // Delete the default role created by trigger (has NULL business_id)
+      // This prevents duplicate role records
+      await supabase
+        .from("user_roles")
+        .delete()
+        .eq("user_id", user.id)
+        .is("business_id", null);
+
+      // Insert owner role with business_id
       const { error: roleError } = await supabase
         .from("user_roles")
-        .upsert(
-          { 
-            user_id: user.id,
-            role: "owner",
-            business_id: business.id
-          },
-          { 
-            onConflict: 'user_id,business_id'
-          }
-        );
+        .insert({ 
+          user_id: user.id,
+          role: "owner",
+          business_id: business.id
+        });
 
       if (roleError) {
         // Rollback business creation

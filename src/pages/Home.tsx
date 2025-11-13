@@ -51,7 +51,7 @@ const Home = () => {
       backgroundSize: "cover",
       backgroundPosition: "center"
     }}>
-        <div className="container mx-auto px-4 py-32 relative z-10">
+        <div className="container mx-auto px-4 py-32 relative z-30">
           <div className="max-w-4xl mx-auto text-center">
             <Badge className="mb-6 bg-primary/20 text-primary border-primary/30">
               AI-Driven Platforms. Real-World Impact.
@@ -78,7 +78,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-0"></div>
       </section>
 
       {/* Products Preview */}

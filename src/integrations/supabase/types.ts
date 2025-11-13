@@ -107,7 +107,9 @@ export type Database = {
           owner_id: string
           phone: string | null
           pms_api_key: string | null
+          pms_api_key_encrypted: string | null
           pms_credentials: Json | null
+          pms_credentials_encrypted: string | null
           pms_system: Database["public"]["Enums"]["pms_system"] | null
           settings: Json | null
           state: string | null
@@ -129,7 +131,9 @@ export type Database = {
           owner_id: string
           phone?: string | null
           pms_api_key?: string | null
+          pms_api_key_encrypted?: string | null
           pms_credentials?: Json | null
+          pms_credentials_encrypted?: string | null
           pms_system?: Database["public"]["Enums"]["pms_system"] | null
           settings?: Json | null
           state?: string | null
@@ -151,7 +155,9 @@ export type Database = {
           owner_id?: string
           phone?: string | null
           pms_api_key?: string | null
+          pms_api_key_encrypted?: string | null
           pms_credentials?: Json | null
+          pms_credentials_encrypted?: string | null
           pms_system?: Database["public"]["Enums"]["pms_system"] | null
           settings?: Json | null
           state?: string | null
@@ -502,6 +508,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      decrypt_pms_data: {
+        Args: { encrypted_data: string; encryption_key: string }
+        Returns: string
+      }
+      encrypt_pms_data: {
+        Args: { data: string; encryption_key: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

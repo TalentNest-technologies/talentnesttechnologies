@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Building2 } from "lucide-react";
 import { FloatingBackground } from "@/components/FloatingBackground";
+import { MFAVerification } from "@/components/hotel-ai/MFAVerification";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showMFA, setShowMFA] = useState(false);
+  const [mfaFactorId, setMfaFactorId] = useState<string>("");
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,11 +31,21 @@ export default function SignIn() {
       if (error) throw error;
 
       if (data.user) {
-        toast({
-          title: "Welcome back!",
-          description: "Signed in successfully",
-        });
-        navigate("/hotel-ai/dashboard");
+        // Check if user has MFA enabled
+        const { data: factors } = await supabase.auth.mfa.listFactors();
+        
+        if (factors && factors.totp && factors.totp.length > 0) {
+          // User has MFA enabled, show verification
+          setMfaFactorId(factors.totp[0].id);
+          setShowMFA(true);
+        } else {
+          // No MFA, proceed to dashboard
+          toast({
+            title: "Welcome back!",
+            description: "Signed in successfully",
+          });
+          navigate("/hotel-ai/dashboard");
+        }
       }
     } catch (error: any) {
       toast({
@@ -63,6 +76,32 @@ export default function SignIn() {
       });
     }
   };
+
+  const handleMFASuccess = () => {
+    toast({
+      title: "Welcome back!",
+      description: "Signed in successfully",
+    });
+    navigate("/hotel-ai/dashboard");
+  };
+
+  const handleMFACancel = () => {
+    setShowMFA(false);
+    setMfaFactorId("");
+  };
+
+  if (showMFA) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4 relative">
+        <FloatingBackground variant="hotel" />
+        <MFAVerification
+          factorId={mfaFactorId}
+          onSuccess={handleMFASuccess}
+          onCancel={handleMFACancel}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative">

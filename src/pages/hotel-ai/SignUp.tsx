@@ -69,7 +69,7 @@ export default function SignUp() {
           title: "Account created!",
           description: "Welcome to Hotel Operations AI",
         });
-        navigate("/hotel-ai/onboarding");
+        navigate("/hotel-ai/mfa-setup");
       }
     } catch (error: any) {
       toast({
@@ -87,7 +87,7 @@ export default function SignUp() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/hotel-ai/onboarding`,
+          redirectTo: `${window.location.origin}/hotel-ai/mfa-setup`,
         },
       });
 

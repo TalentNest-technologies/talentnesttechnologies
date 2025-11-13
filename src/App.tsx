@@ -18,6 +18,7 @@ import NotFound from "./pages/NotFound";
 import SignIn from "./pages/hotel-ai/SignIn";
 import SignUp from "./pages/hotel-ai/SignUp";
 import Onboarding from "./pages/hotel-ai/Onboarding";
+import MFASetup from "./pages/hotel-ai/MFASetup";
 import { DashboardLayout } from "./components/hotel-ai/DashboardLayout";
 import Overview from "./pages/hotel-ai/dashboard/Overview";
 import Revenue from "./pages/hotel-ai/dashboard/Revenue";
@@ -51,6 +52,7 @@ const App = () => (
           {/* Hotel AI Auth Routes */}
           <Route path="/hotel-ai/signin" element={<SignIn />} />
           <Route path="/hotel-ai/signup" element={<SignUp />} />
+          <Route path="/hotel-ai/mfa-setup" element={<MFASetup />} />
           <Route path="/hotel-ai/onboarding" element={<Onboarding />} />
           
           {/* Hotel AI Dashboard Routes */}

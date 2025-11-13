@@ -25,6 +25,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { z } from "zod";
+
+const competitorSchema = z.object({
+  name: z.string().trim().min(1, "Competitor name is required").max(200, "Name too long"),
+  url: z.string().url("Invalid URL format").max(1000, "URL too long"),
+});
 
 export default function CompetitorRates() {
   const { selectedBusiness, businesses } = useOutletContext<any>();
@@ -84,23 +90,24 @@ export default function CompetitorRates() {
   };
 
   const handleAddCompetitor = () => {
-    if (!newCompetitor.name || !newCompetitor.url) {
+    // Validate competitor data
+    const validation = competitorSchema.safeParse(newCompetitor);
+    if (!validation.success) {
       toast({
-        title: "Missing information",
-        description: "Please provide both name and URL",
+        title: "Validation Error",
+        description: validation.error.errors[0].message,
         variant: "destructive",
       });
       return;
     }
 
-    const updated = [...competitors, { ...newCompetitor, id: Date.now() }];
+    const updated = [...competitors, { ...newCompetitor, id: Date.now().toString() }];
     saveCompetitors(updated);
     setNewCompetitor({ name: "", url: "" });
     setIsAddOpen(false);
-
     toast({
       title: "Competitor added",
-      description: `${newCompetitor.name} has been added to your tracking list.`,
+      description: "The competitor has been added to your list.",
     });
   };
 

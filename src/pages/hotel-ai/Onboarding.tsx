@@ -9,6 +9,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Building2, ArrowRight, ArrowLeft } from "lucide-react";
 import { FloatingBackground } from "@/components/FloatingBackground";
+import { z } from "zod";
+
+const businessSchema = z.object({
+  name: z.string().trim().min(1, "Business name is required").max(200, "Business name too long"),
+  businessType: z.string().min(1, "Business type is required"),
+  email: z.string().email("Invalid email address").max(255, "Email too long").optional().or(z.literal("")),
+  phone: z.string().regex(/^[\d\s\-\+\(\)]*$/, "Invalid phone number").max(20, "Phone number too long").optional().or(z.literal("")),
+  website: z.string().url("Invalid URL").max(500, "URL too long").optional().or(z.literal("")),
+  address: z.string().trim().max(500, "Address too long").optional().or(z.literal("")),
+  city: z.string().trim().max(100, "City name too long").optional().or(z.literal("")),
+  state: z.string().trim().max(100, "State name too long").optional().or(z.literal("")),
+  zip: z.string().trim().max(20, "ZIP code too long").optional().or(z.literal("")),
+  country: z.string().trim().max(100, "Country name too long").optional().or(z.literal("")),
+  pmsSystem: z.string(),
+  pmsApiKey: z.string().max(500, "API key too long").optional().or(z.literal("")),
+  googleBusinessId: z.string().max(200, "Google Business ID too long").optional().or(z.literal("")),
+});
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -41,6 +58,18 @@ export default function Onboarding() {
     setIsLoading(true);
 
     try {
+      // Validate all business data
+      const validation = businessSchema.safeParse(businessData);
+      if (!validation.success) {
+        toast({
+          title: "Validation Error",
+          description: validation.error.errors[0].message,
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) throw new Error("User not authenticated");
@@ -70,11 +99,25 @@ export default function Onboarding() {
 
       if (error) throw error;
 
-      // Update user role to owner
-      await supabase
+      // Update user role to owner using upsert to ensure it exists
+      const { error: roleError } = await supabase
         .from("user_roles")
-        .update({ role: "owner" })
-        .eq("user_id", user.id);
+        .upsert(
+          { 
+            user_id: user.id,
+            role: "owner",
+            business_id: business.id
+          },
+          { 
+            onConflict: 'user_id,business_id'
+          }
+        );
+
+      if (roleError) {
+        // Rollback business creation
+        await supabase.from("businesses").delete().eq("id", business.id);
+        throw roleError;
+      }
 
       toast({
         title: "Business added successfully!",

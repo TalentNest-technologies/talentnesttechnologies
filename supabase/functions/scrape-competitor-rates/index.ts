@@ -22,6 +22,38 @@ serve(async (req) => {
   }
 
   try {
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }), 
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+    const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
+    
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      throw new Error('Supabase configuration missing');
+    }
+
+    // Create client with user's auth token to respect RLS
+    const supabaseAuth = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      global: {
+        headers: { Authorization: authHeader },
+      },
+    });
+
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
+
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid token' }), 
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { business_id, competitors } = await req.json();
 
     if (!business_id || !competitors || !Array.isArray(competitors)) {
@@ -31,19 +63,33 @@ serve(async (req) => {
       );
     }
 
+    // Verify business ownership/access (this respects RLS policies)
+    const { data: business, error: businessError } = await supabaseAuth
+      .from('businesses')
+      .select('id')
+      .eq('id', business_id)
+      .single();
+
+    if (businessError || !business) {
+      return new Response(
+        JSON.stringify({ error: 'Access denied to business' }), 
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
     if (!FIRECRAWL_API_KEY) {
       throw new Error('FIRECRAWL_API_KEY not configured');
     }
 
-    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-      throw new Error('Supabase configuration missing');
+    if (!SUPABASE_SERVICE_ROLE_KEY) {
+      throw new Error('Supabase service role key missing');
     }
 
+    // Use service role key only for database insertions (after authorization check)
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     const results: any[] = [];
     const currentDate = new Date().toISOString().split('T')[0];

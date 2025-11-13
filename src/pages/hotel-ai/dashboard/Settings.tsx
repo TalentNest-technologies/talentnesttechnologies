@@ -10,6 +10,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Building2, Key, Globe, Bell, Save, TestTube } from "lucide-react";
+import { z } from "zod";
+
+const pmsSettingsSchema = z.object({
+  pmsSystem: z.string(),
+  pmsUrl: z.string().url("Invalid URL format").max(500, "URL too long").optional().or(z.literal("")),
+  pmsUsername: z.string().max(200, "Username too long").optional().or(z.literal("")),
+  pmsPassword: z.string().max(200, "Password too long").optional().or(z.literal("")),
+  pmsPropertyId: z.string().max(200, "Property ID too long").optional().or(z.literal("")),
+  pmsApiKey: z.string().max(500, "API key too long").optional().or(z.literal("")),
+});
+
+const googleBusinessSchema = z.object({
+  googleBusinessId: z.string().max(200, "Google Business ID too long").optional().or(z.literal("")),
+});
 
 export default function Settings() {
   const { selectedBusiness, businesses } = useOutletContext<any>();
@@ -41,6 +55,25 @@ export default function Settings() {
   const handleSavePmsSettings = async () => {
     if (!selectedBusiness) return;
 
+    // Validate PMS settings
+    const validation = pmsSettingsSchema.safeParse({
+      pmsSystem,
+      pmsUrl: pmsCredentials.url,
+      pmsUsername: pmsCredentials.username,
+      pmsPassword: pmsCredentials.password,
+      pmsPropertyId: pmsCredentials.propertyId,
+      pmsApiKey,
+    });
+
+    if (!validation.success) {
+      toast({
+        title: "Validation Error",
+        description: validation.error.errors[0].message,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSaving(true);
     try {
       const { error } = await supabase
@@ -71,6 +104,18 @@ export default function Settings() {
 
   const handleSaveGoogleBusiness = async () => {
     if (!selectedBusiness) return;
+
+    // Validate Google Business settings
+    const validation = googleBusinessSchema.safeParse({ googleBusinessId });
+    
+    if (!validation.success) {
+      toast({
+        title: "Validation Error",
+        description: validation.error.errors[0].message,
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsSaving(true);
     try {

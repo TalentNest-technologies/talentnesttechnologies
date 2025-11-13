@@ -7,6 +7,14 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Building2 } from "lucide-react";
 import { FloatingBackground } from "@/components/FloatingBackground";
+import { z } from "zod";
+
+const passwordSchema = z.string()
+  .min(8, "Password must be at least 8 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+  .regex(/[0-9]/, "Password must contain at least one number")
+  .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character");
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -29,10 +37,12 @@ export default function SignUp() {
       return;
     }
 
-    if (password.length < 6) {
+    // Validate password strength
+    const passwordValidation = passwordSchema.safeParse(password);
+    if (!passwordValidation.success) {
       toast({
-        title: "Password too short",
-        description: "Password must be at least 6 characters",
+        title: "Weak password",
+        description: passwordValidation.error.errors[0].message,
         variant: "destructive",
       });
       return;

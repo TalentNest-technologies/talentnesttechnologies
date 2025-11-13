@@ -76,14 +76,15 @@ export default function Settings() {
 
     setIsSaving(true);
     try {
-      const { error } = await supabase
-        .from("businesses")
-        .update({
+      // Call edge function to securely store encrypted credentials
+      const { data, error } = await supabase.functions.invoke('store-pms-credentials', {
+        body: {
+          business_id: selectedBusiness,
           pms_system: pmsSystem,
           pms_api_key: pmsApiKey,
           pms_credentials: pmsCredentials,
-        })
-        .eq("id", selectedBusiness);
+        },
+      });
 
       if (error) throw error;
 

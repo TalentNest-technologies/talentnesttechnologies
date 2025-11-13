@@ -34,7 +34,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { business_id, pms_system, pms_api_key } = await req.json();
+    const { business_id, pms_system, pms_api_key, pms_credentials } = await req.json();
 
     if (!business_id) {
       return new Response(JSON.stringify({ error: 'business_id is required' }), {
@@ -58,24 +58,59 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Store PMS API key as a secret
-    const secretName = `pms_api_key_${business_id}`;
-    
-    // Store the secret (this is now encrypted)
-    if (pms_api_key) {
-      // In a real implementation, you would use Supabase Vault
-      // For now, we'll use Supabase secrets which are encrypted
-      // Note: This is a placeholder - actual Vault implementation would be different
-      console.log(`Storing PMS credentials for business ${business_id}`);
+    // Get encryption key from environment
+    const encryptionKey = Deno.env.get('PMS_ENCRYPTION_KEY');
+    if (!encryptionKey) {
+      console.error('PMS_ENCRYPTION_KEY not configured');
+      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    // Update business record to indicate credentials are stored
+    // Encrypt credentials using database function
+    let encryptedApiKey = null;
+    let encryptedCredentials = null;
+
+    if (pms_api_key) {
+      const { data: encrypted, error: encryptError } = await supabase
+        .rpc('encrypt_pms_data', {
+          data: pms_api_key,
+          encryption_key: encryptionKey
+        });
+      
+      if (encryptError) {
+        console.error('Error encrypting API key:', encryptError);
+        throw encryptError;
+      }
+      encryptedApiKey = encrypted;
+    }
+
+    if (pms_credentials && Object.keys(pms_credentials).length > 0) {
+      const { data: encrypted, error: encryptError } = await supabase
+        .rpc('encrypt_pms_data', {
+          data: JSON.stringify(pms_credentials),
+          encryption_key: encryptionKey
+        });
+      
+      if (encryptError) {
+        console.error('Error encrypting credentials:', encryptError);
+        throw encryptError;
+      }
+      encryptedCredentials = encrypted;
+    }
+
+    console.log(`Storing encrypted PMS credentials for business ${business_id}`);
+
+    // Store encrypted data and clear plain text columns
     const { error: updateError } = await supabase
       .from('businesses')
       .update({
         pms_system,
-        // Store only a reference, not the actual key
-        pms_api_key: pms_api_key ? `secret:${secretName}` : null,
+        pms_api_key_encrypted: encryptedApiKey,
+        pms_credentials_encrypted: encryptedCredentials,
+        pms_api_key: null,
+        pms_credentials: null,
       })
       .eq('id', business_id);
 

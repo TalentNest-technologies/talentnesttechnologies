@@ -71,6 +71,14 @@ export const Footer = () => {
                   Hotel Operations AI
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/products/yiolet-couture"
+                  className="text-background/80 hover:text-background smooth-transition text-sm"
+                >
+                  Yiolet Couture
+                </Link>
+              </li>
             </ul>
           </div>
 

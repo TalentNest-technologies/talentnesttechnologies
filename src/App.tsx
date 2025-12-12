@@ -11,6 +11,7 @@ import Products from "./pages/Products";
 import ProductTalentNest from "./pages/ProductTalentNest";
 import ProductTenantNest from "./pages/ProductTenantNest";
 import ProductHotelAI from "./pages/ProductHotelAI";
+import ProductYioletCouture from "./pages/ProductYioletCouture";
 import RecruitingContracting from "./pages/RecruitingContracting";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/products/talentnest" element={<><Navigation /><ProductTalentNest /><Footer /></>} />
           <Route path="/products/tenantnest" element={<><Navigation /><ProductTenantNest /><Footer /></>} />
           <Route path="/products/hotel-ai" element={<><Navigation /><ProductHotelAI /><Footer /></>} />
+          <Route path="/products/yiolet-couture" element={<><Navigation /><ProductYioletCouture /><Footer /></>} />
           <Route path="/recruiting-contracting" element={<><Navigation /><RecruitingContracting /><Footer /></>} />
           <Route path="/services" element={<><Navigation /><Services /><Footer /></>} />
           <Route path="/contact" element={<><Navigation /><Contact /><Footer /></>} />

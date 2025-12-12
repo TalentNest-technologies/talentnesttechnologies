@@ -1,5 +1,5 @@
 interface FloatingBackgroundProps {
-  variant?: "home" | "talentnest" | "tenantnest" | "hotel" | "contracting" | "contact" | "services" | "about";
+  variant?: "home" | "talentnest" | "tenantnest" | "hotel" | "contracting" | "contact" | "services" | "about" | "yiolet";
 }
 
 export const FloatingBackground = ({ variant = "home" }: FloatingBackgroundProps) => {
@@ -12,6 +12,7 @@ export const FloatingBackground = ({ variant = "home" }: FloatingBackgroundProps
     contact: "from-primary/30 via-primary-glow/30 to-muted/30",
     services: "from-secondary/40 via-accent/40 to-primary/30",
     about: "from-muted/30 via-primary-glow/20 to-secondary/30",
+    yiolet: "from-purple-500/40 via-pink-500/30 to-rose-500/30",
   };
 
   return (

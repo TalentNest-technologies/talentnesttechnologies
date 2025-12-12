@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Building2, Hotel, ArrowRight } from "lucide-react";
+import { Users, Building2, Hotel, Palette, ArrowRight } from "lucide-react";
 
 const Products = () => {
   const products = [
@@ -54,6 +54,22 @@ const Products = () => {
         "Multi-property benchmarking",
       ],
     },
+    {
+      name: "Yiolet Couture",
+      tagline: "AI Fashion Commerce & Virtual Design Studio",
+      description:
+        "Design, visualize, customize, and shop—all in one platform with AI-driven virtual try-on and real-time design tools.",
+      icon: Palette,
+      link: "/products/yiolet-couture",
+      color: "from-purple-500 to-pink-600",
+      features: [
+        "Design Your Own Outfit (DYO) Studio",
+        "AI Virtual Try-On Engine",
+        "Designer Collaboration Hub",
+        "AI Merchandising & Analytics",
+        "Global Commerce & Logistics",
+      ],
+    },
   ];
 
   return (
@@ -64,7 +80,7 @@ const Products = () => {
           <div className="max-w-4xl mx-auto text-center">
             <Badge className="mb-6">Our Products</Badge>
             <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">
-              Three Powerful{" "}
+              Four Powerful{" "}
               <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 AI Platforms
               </span>

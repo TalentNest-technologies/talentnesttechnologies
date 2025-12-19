@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Building2, Hotel, Palette, ArrowRight } from "lucide-react";
+import { Users, Building2, Hotel, Palette, ArrowRight, ExternalLink } from "lucide-react";
 
 const Products = () => {
   const products = [
@@ -13,6 +13,7 @@ const Products = () => {
         "Unified ecosystem for recruiters, candidates, HR teams, and freelancers with ATS, HRIS, Learning, and cloud workspace.",
       icon: Users,
       link: "/products/talentnest",
+      externalLink: "https://talentnesttechnologies.com/",
       color: "from-blue-500 to-indigo-600",
       features: [
         "AI-powered ATS with resume parsing",
@@ -29,6 +30,7 @@ const Products = () => {
         "Cloud suite for landlords, tenants, and property managers with AI-driven insights and automation.",
       icon: Building2,
       link: "/products/tenantnest",
+      externalLink: "https://nest-rent-suite.lovable.app",
       color: "from-cyan-500 to-blue-600",
       features: [
         "Tenant onboarding & KYC",
@@ -45,6 +47,7 @@ const Products = () => {
         "Multi-property operations platform with AI rate recommendations and revenue optimization.",
       icon: Hotel,
       link: "/products/hotel-ai",
+      externalLink: "https://tenantnest-hub.lovable.app/",
       color: "from-emerald-500 to-cyan-600",
       features: [
         "Real-time operations dashboard",
@@ -61,6 +64,7 @@ const Products = () => {
         "Design, visualize, customize, and shop—all in one platform with AI-driven virtual try-on and real-time design tools.",
       icon: Palette,
       link: "/products/yiolet-couture",
+      externalLink: "https://yiolet-couture.lovable.app/",
       color: "from-purple-500 to-pink-600",
       features: [
         "Design Your Own Outfit (DYO) Studio",
@@ -118,6 +122,14 @@ const Products = () => {
                         Learn More <ArrowRight className="ml-2" />
                       </Link>
                     </Button>
+                    <a
+                      href={product.externalLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-primary font-medium flex items-center gap-2 smooth-transition text-sm mt-3"
+                    >
+                      Visit Website <ExternalLink className="w-4 h-4" />
+                    </a>
                   </Card>
                 </div>
 

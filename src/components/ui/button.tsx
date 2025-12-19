@@ -11,6 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg",
         hero: "gradient-primary text-primary-foreground hover:opacity-90 shadow-lg hover:shadow-glow font-semibold",
+        heroWhite: "bg-white text-foreground hover:bg-white/90 shadow-lg font-semibold border-2 border-white",
         gradient: "gradient-secondary text-primary-foreground hover:opacity-90 shadow-md hover:shadow-lg",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",

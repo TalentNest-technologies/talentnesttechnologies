@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Building2, Hotel, Sparkles, Shield, TrendingUp, Zap, CheckCircle2, ArrowRight } from "lucide-react";
+import { Users, Building2, Hotel, Palette, Sparkles, Shield, TrendingUp, Zap, CheckCircle2, ArrowRight, ExternalLink } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { FloatingBackground } from "@/components/FloatingBackground";
 
@@ -13,6 +13,7 @@ const Home = () => {
       description: "AI-powered recruitment platform with ATS, HRIS, and freelance workspace",
       icon: Users,
       link: "/products/talentnest",
+      externalLink: "https://talentnesttechnologies.com/",
       color: "from-blue-500 to-indigo-600",
     },
     {
@@ -20,6 +21,7 @@ const Home = () => {
       description: "Smart property and tenant management with AI-driven insights",
       icon: Building2,
       link: "/products/tenantnest",
+      externalLink: "https://nest-rent-suite.lovable.app",
       color: "from-cyan-500 to-blue-600",
     },
     {
@@ -27,7 +29,16 @@ const Home = () => {
       description: "Revenue intelligence and operations automation for hospitality",
       icon: Hotel,
       link: "/products/hotel-ai",
+      externalLink: "https://tenantnest-hub.lovable.app/",
       color: "from-emerald-500 to-cyan-600",
+    },
+    {
+      name: "Yiolet Couture",
+      description: "AI fashion commerce with virtual try-on and design studio",
+      icon: Palette,
+      link: "/products/yiolet-couture",
+      externalLink: "https://yiolet-couture.lovable.app/",
+      color: "from-purple-500 to-pink-600",
     },
   ];
 
@@ -114,34 +125,48 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge className="mb-4">Our Products</Badge>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">Three Powerful Platforms</h2>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+              Four Powerful{" "}
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                AI Platforms
+              </span>
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive solutions designed for modern businesses
+              Comprehensive solutions for recruitment, property management, hospitality, and fashion commerce
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <Card
                 key={product.name}
-                className="glass-card p-8 smooth-transition hover:shadow-lg hover:-translate-y-1 group cursor-pointer"
-                onClick={() => (window.location.href = product.link)}
+                className="glass-card p-6 smooth-transition hover:shadow-lg hover:-translate-y-1 group"
               >
                 <div
-                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${product.color} flex items-center justify-center mb-6 group-hover:scale-110 smooth-transition`}
+                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${product.color} flex items-center justify-center mb-5 group-hover:scale-110 smooth-transition`}
                 >
                   <product.icon className="w-7 h-7 text-white" />
                 </div>
 
-                <h3 className="text-2xl font-heading font-semibold mb-3">{product.name}</h3>
-                <p className="text-muted-foreground mb-6">{product.description}</p>
+                <h3 className="text-xl font-heading font-semibold mb-2">{product.name}</h3>
+                <p className="text-muted-foreground text-sm mb-5">{product.description}</p>
 
-                <Link
-                  to={product.link}
-                  className="text-primary font-medium flex items-center gap-2 group-hover:gap-3 smooth-transition"
-                >
-                  Learn more <ArrowRight className="w-4 h-4" />
-                </Link>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    to={product.link}
+                    className="text-primary font-medium flex items-center gap-2 hover:gap-3 smooth-transition text-sm"
+                  >
+                    Learn more <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <a
+                    href={product.externalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary font-medium flex items-center gap-2 smooth-transition text-sm"
+                  >
+                    Visit Website <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
               </Card>
             ))}
           </div>

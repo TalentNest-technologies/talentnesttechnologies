@@ -22,6 +22,7 @@ export const Navigation = () => {
         { name: "TalentNest", path: "/products/talentnest" },
         { name: "TenantNest", path: "/products/tenantnest" },
         { name: "Hotel Operations AI", path: "/products/hotel-ai" },
+        { name: "Yiolet Couture", path: "/products/yiolet-couture" },
       ],
     },
     { name: "Services", path: "/services" },

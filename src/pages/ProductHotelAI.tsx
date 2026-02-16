@@ -7,6 +7,7 @@ import {
   Calendar, Users, Shield, Zap, TrendingUp, Clock
 } from "lucide-react";
 import { FloatingBackground } from "@/components/FloatingBackground";
+import { HotelOpsInteractiveDemo } from "@/components/hotelops/HotelOpsInteractiveDemo";
 
 const ProductHotelAI = () => {
   const clients = ["Ramada", "Motel 6", "Choice Hotels", "Wyndham", "Quality Inn"];
@@ -103,6 +104,32 @@ const ProductHotelAI = () => {
         </div>
       </section>
 
+      {/* Interactive Demo */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4">Interactive Demo</Badge>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+              Experience the Platform
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Explore a fully interactive preview of our operations dashboard, AI rate engine, night audit, and multi-property analytics.
+            </p>
+          </div>
+          <div className="max-w-6xl mx-auto">
+            <HotelOpsInteractiveDemo />
+          </div>
+          <div className="flex flex-wrap gap-4 justify-center mt-10">
+            <Button asChild variant="hero" size="lg">
+              <Link to="/contact">Request a Live Walkthrough</Link>
+            </Button>
+            <Button variant="outline" size="lg" onClick={() => document.getElementById("integrations")?.scrollIntoView({ behavior: "smooth" })}>
+              See Integrations
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Trusted By */}
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -191,7 +218,7 @@ const ProductHotelAI = () => {
       </section>
 
       {/* Integrations */}
-      <section className="py-24 bg-background">
+      <section id="integrations" className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">

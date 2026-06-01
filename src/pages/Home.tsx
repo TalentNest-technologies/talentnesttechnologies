@@ -29,7 +29,7 @@ const Home = () => {
       description: "Revenue intelligence and operations automation for hospitality",
       icon: Hotel,
       link: "/products/hotel-ai",
-      externalLink: "https://tenantnest-hub.lovable.app/",
+      externalLink: "/products/hotel-ai",
       color: "from-emerald-500 to-cyan-600",
     },
     {
